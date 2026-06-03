@@ -4,15 +4,15 @@ import torch
 import numpy as np
 from typing import Optional
 
-from configs.hyperparameters import TrainConfig, SNAPSHOT_FILE, PINN_CACHE
+from configs.hyperparameters import TrainConfig, SNAPSHOT_FILE, PINN_CACHE, PASSC_PLOT
 from src.training.data import FemSnapshots, smoothness_mask
 from src.model.pinn import build_model_from_cfg
 from src.model.physics import pde_residual
-from src.utils.hashing import pinn_fingerprint, pinn_cache_is_valid, trainconfig_to_dict
+from src.utils.ml_hashing import pinn_fingerprint, pinn_cache_is_valid, trainconfig_to_dict
 
 def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
              cfg: Optional[TrainConfig] = None,
-             device_str: str = "auto",
+             device_str: str = "cuda", out_plot: str = PASSC_PLOT,
              cache_path: str = PINN_CACHE,
              force_retrain: bool = False) -> None:
     """

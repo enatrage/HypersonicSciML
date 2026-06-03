@@ -50,7 +50,7 @@ def main() -> int:
                    help="Path to the FEM snapshot bundle.")
     p.add_argument("--pinn-cache", default=PINN_CACHE,
                    help="Path to the PINN weight cache.")
-    p.add_argument("--device",    default="auto", choices=("auto", "cpu", "cuda"),
+    p.add_argument("--device",    default="cuda", choices=("auto", "cpu", "cuda"),
                    help="Compute device for the PINN step.")
     p.add_argument("--out",       default=PASSC_PLOT,
                    help="Output plot path for the PINN comparison.")

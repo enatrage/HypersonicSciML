@@ -2,7 +2,7 @@
 #                       Exact Riemann solver (Toro, 2009)
 # ===========================================================================
 
-from ...configs.hyperparameters import (GAMMA_V, RHO_L_V, U_L_V, P_L_V,
+from configs.hyperparameters import (GAMMA_V, RHO_L_V, U_L_V, P_L_V,
                                             RHO_R_V, U_R_V, P_R_V, X_DIAPH)
 
 def exact_riemann(x_arr, t_eval,

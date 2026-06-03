@@ -2,7 +2,31 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Dict, List, Tuple
 
-def plot_fem_vs_exact(
+from configs.hyperparameters import T_FINAL, GAMMA_V, FEM_PLOT, SNAPSHOT_FILE, NX
+from src.fem.riemann import exact_riemann
+
+
+def plot_fem_vs_exact() -> None: 
+    
+    xpoints = np.linspace(0.0, 1.0, NX+1) # Number of nodes +1 than number of cells
+    rho_ex, u_ex, p_ex = exact_riemann(xpoints, T_FINAL)
+    e_ex = p_ex / ((GAMMA_V - 1.0) * rho_ex)
+    fem_data = np.load(SNAPSHOT_FILE)
+    
+    rho_snap = fem_data['rho_snap'] # Assuming the snapshot file contains 'rho_snap', 'q_snap', and 'E_snap' arrays
+    q_snap   = fem_data['q_snap']
+    E_snap   = fem_data['E_snap']
+    rho_fem = rho_snap[-1]
+    q_fem   = q_snap[-1]
+    E_fem   = E_snap[-1]
+
+    u_fem   = q_fem / rho_fem
+    p_fem = (GAMMA_V - 1.0) * (E_fem - 0.5 * rho_fem * u_fem**2)
+    e_fem = p_fem / ((GAMMA_V - 1.0) * rho_fem)
+    # scripts/run_fem_stage.py (Line 47)
+    _plot_fem_vs_exact_internal(xpoints, (rho_ex, u_ex, p_ex, e_ex), (rho_fem, u_fem, p_fem, e_fem), FEM_PLOT)
+
+def _plot_fem_vs_exact_internal(
     x: np.ndarray, 
     exact: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
     fem: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],

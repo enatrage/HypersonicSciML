@@ -21,8 +21,8 @@ K_S            = 10                                  # snapshots to retain
 
 SNAPSHOT_FILE  = "runs/fem/refactor/test1/sod_fem_snapshots.npz"
 FEM_PLOT       = "runs/fem/refactor/test1/sod_cyz2.png"
-PINN_CACHE     = "runs/pinn/refactor/test1/sod_passc_model.pt"
-PASSC_PLOT     = "runs/pinn/refactor/test1/sod_passc.png"
+PINN_CACHE     = "runs/pinn/refactor/test/sod_passc_model.pt"
+PASSC_PLOT     = "runs/pinn/refactor/test/sod_passc.png"
 
 # Reference scales used by YZβ and by the PINN's Y-scaled losses.
 U1_REF_V = float(RHO_L_V)

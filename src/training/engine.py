@@ -3,16 +3,18 @@ import math
 import torch
 import numpy as np
 from typing import Optional
+import time
 
-from configs.hyperparameters import TrainConfig, SNAPSHOT_FILE, PINN_CACHE
+from configs.hyperparameters import TrainConfig, SNAPSHOT_FILE, PINN_CACHE, PASSC_PLOT, NX
 from src.training.data import FemSnapshots, smoothness_mask
 from src.model.pinn import build_model_from_cfg
 from src.model.physics import pde_residual
-from src.utils.hashing import pinn_fingerprint, pinn_cache_is_valid, trainconfig_to_dict
+from src.utils.ml_hashing import pinn_fingerprint, pinn_cache_is_valid, trainconfig_to_dict
+from src.utils.plotting import plot_pinn_graphs
 
 def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
              cfg: Optional[TrainConfig] = None,
-             device_str: str = "auto",
+             device_str: str = "cuda", out_plot: str = PASSC_PLOT,
              cache_path: str = PINN_CACHE,
              force_retrain: bool = False) -> None:
     """
@@ -88,8 +90,8 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
             if epoch < ph.upto_epoch: return ph.w_data, ph.w_pde
         return cfg.schedule[-1].w_data, cfg.schedule[-1].w_pde
 
-    log_every = max(1, cfg.epochs // 25)
-    
+    log_every = max(1, cfg.epochs // 250)
+    start_time = time.time()
     for epoch in range(cfg.epochs):
         w_data, w_pde = _weights(epoch)
         perm = torch.randperm(n_data, device=device)
@@ -138,7 +140,7 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
             ep_total += float(L_total.detach())
             ep_data  += float(L_data.detach())
             ep_pde   += float(L_pde.detach())
-            
+        end_epoch = time.time()   
         ep_total /= steps_per_epoch
         ep_data  /= steps_per_epoch
         ep_pde   /= steps_per_epoch
@@ -160,7 +162,8 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
             print(f"epoch {epoch:5d} | L_tot {ep_total:.3e} "
                   f"| L_data {ep_data:.3e} | L_pde {ep_pde:.3e} "
                   f"| w_data {w_data:.2f} w_pde {w_pde:.2f} "
-                  f"| lr {optim.param_groups[0]['lr']:.1e}")
+                  f"| lr {optim.param_groups[0]['lr']:.1e}"
+                  f"| t_elapsed {(end_epoch - start_time)/60:.2f} min")
                   
     if best_state is not None:
         model.load_state_dict(best_state)
@@ -176,3 +179,22 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
         print(f"[INFO] PINN cache saved: {cache_path} (fingerprint={target_fp})")
     except Exception as exc:
         print(f"[WARN] could not save PINN cache: {exc}")
+
+    if history.get("epoch"):
+        # If runned, get the plots
+        T = fem.t_final
+        xpoints = np.linspace(0.0, 1.0, NX+1)
+        model.eval()
+        with torch.no_grad():
+            t_q = torch.full((xpoints.size, 1), T, dtype=torch.float32, device=device)
+            x_q = torch.from_numpy(xpoints).float().view(-1, 1).to(device)
+            U_pinn = model(t_q, x_q).cpu().numpy()
+        rho_pinn, q_pinn, E_pinn = U_pinn[:,0], U_pinn[:,1], U_pinn[:,2]
+        u_pinn   = q_pinn / np.maximum(rho_pinn, 1e-12)
+        p_pinn   = (fem.gamma - 1.0) * (E_pinn - 0.5 * rho_pinn * u_pinn**2)
+        e_pinn   = p_pinn   / ((fem.gamma - 1.0) * np.maximum(rho_pinn,   1e-12))
+        pinn_package = (rho_pinn, u_pinn, p_pinn, e_pinn)
+        plot_pinn_graphs(history, pinn_package)
+    else:
+        print("[INFO] No training history available "
+              "(model came from cache without history); skipping diagnostics plot.")

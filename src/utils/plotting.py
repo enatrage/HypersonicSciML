@@ -2,7 +2,31 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Dict, List, Tuple
 
-def plot_fem_vs_exact(
+from configs.hyperparameters import T_FINAL, GAMMA_V, NX, FEM_PLOT, SNAPSHOT_FILE, PASSC_PLOT
+from src.fem.riemann import exact_riemann
+
+
+def plot_fem_vs_exact() -> None: 
+    
+    xpoints = np.linspace(0.0, 1.0, NX+1) # Number of nodes +1 than number of cells
+    rho_ex, u_ex, p_ex = exact_riemann(xpoints, T_FINAL)
+    e_ex = p_ex / ((GAMMA_V - 1.0) * rho_ex)
+    fem_data = np.load(SNAPSHOT_FILE)
+    
+    rho_snap = fem_data['rho_snap'] # Assuming the snapshot file contains 'rho_snap', 'q_snap', and 'E_snap' arrays
+    q_snap   = fem_data['q_snap']
+    E_snap   = fem_data['E_snap']
+    rho_fem = rho_snap[-1]
+    q_fem   = q_snap[-1]
+    E_fem   = E_snap[-1]
+
+    u_fem   = q_fem / rho_fem
+    p_fem = (GAMMA_V - 1.0) * (E_fem - 0.5 * rho_fem * u_fem**2)
+    e_fem = p_fem / ((GAMMA_V - 1.0) * rho_fem)
+    # scripts/run_fem_stage.py (Line 47)
+    _plot_fem_vs_exact_internal(xpoints, (rho_ex, u_ex, p_ex, e_ex), (rho_fem, u_fem, p_fem, e_fem), FEM_PLOT)
+
+def _plot_fem_vs_exact_internal(
     x: np.ndarray, 
     exact: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
     fem: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
@@ -36,8 +60,36 @@ def plot_fem_vs_exact(
     fig.savefig(save_path, dpi=600, bbox_inches='tight')
     plt.close(fig)
 
+def plot_pinn_graphs(
+    history: Dict[str, List[float]],
+    pinn_package: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]
+) -> None:
+    
+    xpoints = np.linspace(0.0, 1.0, NX+1) # Number of nodes +1 than number of cells
+    rho_ex, u_ex, p_ex = exact_riemann(xpoints, T_FINAL)
+    e_ex = p_ex / ((GAMMA_V - 1.0) * rho_ex)
+    fem_data = np.load(SNAPSHOT_FILE)
+    
+    rho_snap = fem_data['rho_snap'] # Assuming the snapshot file contains 'rho_snap', 'q_snap', and 'E_snap' arrays
+    q_snap   = fem_data['q_snap']
+    E_snap   = fem_data['E_snap']
+    q_fem   = q_snap[-1]
+    E_fem   = E_snap[-1]
 
-def plot_pinn_vs_fem_vs_exact(
+    rho_fem = rho_snap[-1]
+    u_fem   = q_fem / rho_fem
+    p_fem = (GAMMA_V - 1.0) * (E_fem - 0.5 * rho_fem * u_fem**2)
+    e_fem = p_fem / ((GAMMA_V - 1.0) * rho_fem)
+
+    ex_package = (rho_ex, u_ex, p_ex, e_ex)
+    fem_package = (rho_fem, u_fem, p_fem, e_fem)
+    
+    _plot_pinn_vs_fem_vs_exact_internal(xpoints, ex_package, fem_package, pinn_package, PASSC_PLOT)
+    TRAIN_PLOT = PASSC_PLOT.replace('.png', '_training.png')
+    _plot_training_diagnostics_internal(history, TRAIN_PLOT)
+    pass
+
+def _plot_pinn_vs_fem_vs_exact_internal(
     x: np.ndarray, 
     exact: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
     fem: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
@@ -76,7 +128,7 @@ def plot_pinn_vs_fem_vs_exact(
     plt.close(fig)
 
 
-def plot_training_diagnostics(history: Dict[str, List[float]], save_path: str) -> None:
+def _plot_training_diagnostics_internal(history: Dict[str, List[float]], save_path: str) -> None:
     """
     Plots the PDE/Data loss curves and the adaptive weighting schedule over time.
     """

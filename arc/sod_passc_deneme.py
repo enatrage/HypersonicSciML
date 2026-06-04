@@ -63,6 +63,7 @@ import os
 import sys
 from dataclasses import asdict, dataclass, field, fields
 from typing import Optional
+import time
 
 
 # ===========================================================================
@@ -83,10 +84,10 @@ NX             = 250
 BETA_V         = 2.0
 K_S            = 10                                  # snapshots to retain
 
-SNAPSHOT_FILE  = "sod_fem_snapshots.npz"
-PINN_CACHE     = "sod_passc_model.pt"
-PASSC_PLOT     = "sod_passc.png"
-FEM_PLOT       = "sod_cyz2.png"
+SNAPSHOT_FILE  = "runs/fem/refactor/older/sod_fem_snapshots.npz"
+PINN_CACHE     = "runs/pinn/refactor/older/sod_passc_model.pt"
+PASSC_PLOT     = "runs/pinn/refactor/older/sod_passc.png"
+FEM_PLOT       = "runs/fem/refactor/older/sod_cyz2.png"
 
 # Reference scales used by YZβ and by the PINN's Y-scaled losses.
 U1_REF_V = float(RHO_L_V)
@@ -787,8 +788,10 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
                 if epoch < ph.upto_epoch: return ph.w_data, ph.w_pde
             return cfg.schedule[-1].w_data, cfg.schedule[-1].w_pde
 
+
+        start_time = time.time()
         # ----- training loop -----
-        log_every = max(1, cfg.epochs // 25)
+        log_every = max(1, cfg.epochs // 250)
         for epoch in range(cfg.epochs):
             w_data, w_pde = _weights(epoch)
             perm = torch.randperm(n_data, device=device)
@@ -831,6 +834,7 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
                 ep_total += float(L_total.detach())
                 ep_data  += float(L_data.detach())
                 ep_pde   += float(L_pde.detach())
+                end_epoch = time.time()
             ep_total /= steps_per_epoch
             ep_data  /= steps_per_epoch
             ep_pde   /= steps_per_epoch
@@ -850,7 +854,8 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
                 print(f"epoch {epoch:5d} | L_tot {ep_total:.3e} "
                       f"| L_data {ep_data:.3e} | L_pde {ep_pde:.3e} "
                       f"| w_data {w_data:.2f} w_pde {w_pde:.2f} "
-                      f"| lr {optim.param_groups[0]['lr']:.1e}")
+                      f"| lr {optim.param_groups[0]['lr']:.1e}"
+                      f"| t_elapsed {(end_epoch - start_time)/60:.2f} min")
         if best_state is not None:
             model.load_state_dict(best_state)
 

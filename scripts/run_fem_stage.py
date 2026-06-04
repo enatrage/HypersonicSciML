@@ -1,14 +1,17 @@
 import os
 import sys
 import argparse
+import numpy as np
 
 # Append the repository root to the Python path
 repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if repo_root not in sys.path:
     sys.path.append(repo_root)
 
-from configs.hyperparameters import SNAPSHOT_FILE # The default snapshot relative path defined in hyperparameters.py
+from configs.hyperparameters import FEM_PLOT, SNAPSHOT_FILE, T_FINAL, GAMMA_V, NX # The default snapshot relative path defined in hyperparameters.py
 from src.fem.solver import run_fem # The main handler function
+from src.fem.riemann import exact_riemann # To compute the exact Riemann solution for comparison
+from src.utils.plotting import plot_fem_vs_exact # To plot the FEM solution against the
 from src.utils.hashing import fem_cache_is_valid, fem_fingerprint # To figure out the cache validity and fingerprint for the FEM settings
 
 def main() -> int:
@@ -34,6 +37,9 @@ def main() -> int:
         else: # If cache file doesn't exist, print that it's being computed
             print(f"[INFO] No FEM cache at {args.snapshots}; computing.")
         run_fem(snapshot_path=args.snapshots)
+        plot_fem_vs_exact()
+        print(f"[INFO] FEM solution computed and plotted against exact solution. "
+              f"Plot saved to {FEM_PLOT}.")
         
     return 0 # Exit with success
 

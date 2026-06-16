@@ -20,9 +20,9 @@ BETA_V         = 2.0
 K_S            = 10                                  # snapshots to retain
 
 SNAPSHOT_FILE  = "runs/fem/refactor/test1/sod_fem_snapshots.npz"
-FEM_PLOT       = "runs/fem/refactor/test1/sod_cyz2.png"
-PINN_CACHE     = "runs/pinn/refactor/test/sod_passc_model.pt"
-PASSC_PLOT     = "runs/pinn/refactor/test/sod_passc.png"
+FEM_PLOT       = "tests/refactor/issue_3/sod_cyz2.png"
+PINN_CACHE     = "tests/refactor/issue_3/sod_passc_model.pt"
+PASSC_PLOT     = "tests/refactor/issue_3/sod_passc.png"
 
 # Reference scales used by YZβ and by the PINN's Y-scaled losses.
 U1_REF_V = float(RHO_L_V)
@@ -41,6 +41,22 @@ class Phase:
 
 @dataclass
 class TrainConfig:
+    # Data configs
+    num_workers: int = field(default=0,
+                             metadata={"help": "Num of workers for the train dataloader, 0 as default since data is simple and small"})
+    pin_memory: bool = field(default=True, 
+                             metadata={"help": "Whether to pin the worker(s) in memory"})
+    batch_size: int   = field(default=1024,
+                             metadata={"help": "Train batch size"})
+    grad_quantile: float = field(default=0.92,
+                                 metadata={"help": "Smoothness quantile threshold."})
+    debug_mode: bool = field(default=False,
+                             metadata={"help": "Debug mode, yes/no"})
+
+    # Log configs
+    log_every_n: int = field(default=20,
+                             metadata={"help": "Log the training results at how many steps, will log each n step."})
+
     # Network capacity
     n_hidden:    int   = field(default=48,
                                metadata={"help": "Hidden layer width."})
@@ -54,13 +70,11 @@ class TrainConfig:
     # Optimisation
     epochs:      int   = field(default=5000,
                                metadata={"help": "Training epochs."})
-    batch_size:  int   = field(default=1024,
-                               metadata={"help": "Mini-batch size."})
     lr:          float = field(default=8.0e-4,
                                metadata={"help": "AdamW learning rate."})
     weight_decay:float = field(default=1.0e-7,
                                metadata={"help": "AdamW weight decay."})
-    n_coll:      int   = field(default=2048,
+    n_col:      int   = field(default=2048,
                                metadata={"help": "Collocation points per PDE step."})
     grad_clip:   float = field(default=1.0,
                                metadata={"help": "Gradient-norm clip."})
@@ -68,8 +82,6 @@ class TrainConfig:
                                metadata={"help": "PDE residual clip value."})
     
     # Selective enforcement -- top (1-q) fraction of |drho/dx| nodes are excluded
-    grad_quantile:       float = field(default=0.92,
-                                       metadata={"help": "Smoothness quantile threshold."})
     pde_every_k_batches: int   = field(default=1,
                                        metadata={"help": "Evaluate PDE loss every k batches."})
     seed:        int   = field(default=0,

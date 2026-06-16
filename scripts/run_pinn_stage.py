@@ -60,8 +60,9 @@ def main() -> int:
 
     print("\n========  STEP 2 : PINN  ========")
     cfg = _trainconfig_from_args(args)
-    run_pinn(snapshot_path=args.snapshots, cfg=cfg,
-             device_str=args.device, out_plot=args.out,
+    run_pinn(snapshot_path=args.snapshots, 
+             cfg=cfg,
+             device_str=args.device,
              cache_path=args.pinn_cache,
              force_retrain=args.force_pinn)
              

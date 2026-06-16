@@ -5,13 +5,12 @@ import numpy as np
 from typing import Optional
 import time
 
-from configs.hyperparameters import TrainConfig, SNAPSHOT_FILE, PINN_CACHE, NX
+from configs.hyperparameters import TrainConfig, SNAPSHOT_FILE, PINN_CACHE, NX, build_component_setups
 from src.training.data import get_data
-from src.model.pinn import build_model_from_cfg
 from src.model.physics import pde_residual
 from src.utils.ml_hashing import pinn_fingerprint, pinn_cache_is_valid, trainconfig_to_dict
 from src.utils.plotting import plot_pinn_graphs
-from src.training.loss import Arc_Loss
+from src.ops.loaders import build_model, build_optimizer, build_scheduler, build_loss
 
 def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
              cfg: Optional[TrainConfig] = None,
@@ -30,6 +29,8 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
     # Get cfg
     if cfg is None:
         cfg = TrainConfig()
+    # Build the <system>_setup dicts that drive the dynamic component loaders
+    setups = build_component_setups(cfg)
     # Get seed
     np.random.seed(cfg.seed)
     torch.manual_seed(cfg.seed)
@@ -68,27 +69,25 @@ def run_pinn(snapshot_path: str = SNAPSHOT_FILE,
     if use_cache:
         print(f"[INFO] PINN cache hit: loading {cache_path}")
         ckpt = torch.load(cache_path, map_location=device, weights_only=False)
-        model = build_model_from_cfg(cfg, device)
+        model = build_model(setups["model_setup"], device)
         model.load_state_dict(ckpt["model_state"])
         return
     print(f"[INFO] No valid PINN cache at {cache_path}; commencing training.")
-    model = build_model_from_cfg(cfg, device)
+    model = build_model(setups["model_setup"], device)
     # Optim and schedule
-    optim = torch.optim.AdamW(model.parameters(), lr=cfg.lr,
-                              weight_decay=cfg.weight_decay,
-                              betas=(0.9, 0.999))
-    lr_schedule = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optim, mode='min', factor=0.9, patience=150, min_lr=1.0e-6)
+    optim = build_optimizer(model.parameters(), setups["optim_setup"])
+    lr_schedule = build_scheduler(optim, setups["scheduler_setup"])
     # Loss
     t_axis = dataset.t.view(K_s, Nx)[:, 0] # Initting related to collocation points, inputted to the loss
     x_axis = dataset.x.view(K_s, Nx)[0, :]
     smooth_map = dataset.is_smooth.view(K_s, Nx)
     t_start = float(dataset.t.min())
-    loss_fn = Arc_Loss(
-        pde_residual_fn=pde_residual, gamma=gamma, pde_every_k_batches=cfg.pde_every_k_batches, 
-        res_clip=cfg.res_clip, Y_inv=Y_inv, t_axis=t_axis, x_axis=x_axis, smooth_map=smooth_map, 
-        n_col=cfg.n_col, t_start=t_start, t_final=t_final
-    ).to(device)
+    loss_fn = build_loss(
+        setups["loss_setup"], device,
+        pde_residual_fn=pde_residual, gamma=gamma, Y_inv=Y_inv,
+        t_axis=t_axis, x_axis=x_axis, smooth_map=smooth_map,
+        t_start=t_start, t_final=t_final,
+    )
 
 
     ## TRAINING RUN ITSELF

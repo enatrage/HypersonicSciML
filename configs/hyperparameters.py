@@ -94,3 +94,40 @@ class TrainConfig:
         Phase(upto_epoch=3500, w_data=0.30, w_pde=5.00),
         Phase(upto_epoch=10**9, w_data=0.01, w_pde=15.00),   # physics-dominant
     ])
+
+
+def build_component_setups(cfg: "TrainConfig") -> dict:
+    """Build the <system>_setup dicts the loaders ingest, from a TrainConfig."""
+    return {
+        "model_setup": {
+            "type": "PINN_Euler",
+            "cfg_model": {
+                "n_hidden": cfg.n_hidden,
+                "n_blocks": cfg.n_blocks,
+                "n_fourier": cfg.n_fourier,
+                "sigma": cfg.sigma,
+            },
+        },
+        "optim_setup": {
+            "type": "AdamW",
+            "cfg_optim": {
+                "lr": cfg.lr,
+                "weight_decay": cfg.weight_decay,
+                "betas": (0.9, 0.999),
+            },
+        },
+        "scheduler_setup": {
+            "type": "ReduceLROnPlateau",
+            "cfg_scheduler": {
+                "mode": "min", "factor": 0.9, "patience": 150, "min_lr": 1.0e-6,
+            },
+        },
+        "loss_setup": {
+            "type": "Arc_Loss",
+            "cfg_loss": {
+                "pde_every_k_batches": cfg.pde_every_k_batches,
+                "res_clip": cfg.res_clip,
+                "n_col": cfg.n_col,
+            },
+        },
+    }

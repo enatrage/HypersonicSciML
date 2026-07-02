@@ -1,0 +1,30 @@
+# Master run_mode
+run_mode:
+  fem: TRUE # Boolean for whether to run the fem
+  model: TRUE # Boolean for whether to run the model
+
+# Problem definitions, for more details, see the schemas
+problem_definition:
+  thermodynamics:
+    gamma: 1.4
+
+  domain:
+    x_diaph: 0.5
+    nx: 250
+    t_final: 0.20
+    dt: 1.0e-3
+
+  initial_conditions:
+    left:
+      rho: 1.0
+      u: 0.0
+      p: 1.0
+    right:
+      rho: 0.125
+      u: 0.0
+      p: 0.1
+    
+  scaling:
+    beta: 2.0
+    k_s: 10
+

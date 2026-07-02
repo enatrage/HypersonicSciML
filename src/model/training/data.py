@@ -6,8 +6,6 @@ from torch.utils.data import Dataset, DataLoader
 from pathlib import Path
 from typing import Iterator, Union
 
-from configs.hyperparameters import RHO_L_V, P_L_V, GAMMA_V
-
 class FemSnapshots(Dataset):
     """
     Pytorch dataset for loading FEM snapshots from a .npz file
@@ -19,18 +17,20 @@ class FemSnapshots(Dataset):
     Returns:
         A PyTorch Dataset object that can be used with a DataLoader for training a neural network
     """
-    def __init__(self, data: np.ndarray, grad_quantile: float = 0.95):
+    def __init__(self, data: np.ndarray, U1_ref: float, U2_ref: float, U3_ref: float, grad_quantile: float):
 
         # Access the static physical and numerical params
         self.gamma = float(data["gamma"])
+        self.t_start = float(data["t_start"])
         self.t_final = float(data["t_final"])
         self.dt = float(data["dt"])
-        self.fp = str(data["fem_fingerprint"]) if "fem_fingerprint" in data.files else ""
         self.U_ref = torch.from_numpy(data["U_ref"].astype(np.float64)).float()
 
         # Extract raw spatio-temporal arrays
         x_raw = data["x"].astype(np.float64) # spatial array
         t_raw = data["t_snap"].astype(np.float64) # temporal array
+        self.t_axis = torch.from_numpy(t_raw).float() # Store these for downstream use
+        self.x_axis = torch.from_numpy(x_raw).float()
         U_raw = np.stack([data["rho_snap"], data["q_snap"], data["E_snap"]], axis=-1).astype(np.float64) # the raw value array
         self.K_s = t_raw.size # number of snapshots
         self.Nx = x_raw.size # number of cells
@@ -57,10 +57,7 @@ class FemSnapshots(Dataset):
 
         # Build the U_ref and the Y_inv factors
         # Reference scales used by YZβ and by the PINN's Y-scaled losses.
-        self.U1_REF_V = float(RHO_L_V)
-        self.U2_REF_V = float(RHO_L_V * 1.0)                                      # ~ρ_L * a_L
-        self.U3_REF_V = float(P_L_V / (GAMMA_V - 1.0) + 0.5 * RHO_L_V * 1.0)      # ~E_L
-        self.U_ref = torch.tensor([self.U1_REF_V, self.U2_REF_V, self.U3_REF_V]).float()
+        self.U_ref = torch.tensor([U1_ref, U2_ref, U3_ref]).float()
         self.Y_inv = (1.0 / self.U_ref).view(1, 3)
 
     def __len__(self):
@@ -73,33 +70,20 @@ class FemSnapshots(Dataset):
         return self.t[idx], self.x[idx], self.U[idx]
 
 
-def get_data(snapshot_path: Union[str, Path], batch_size: int, grad_quantile: float, num_workers: int = 8, pin_memory: bool = True) -> Iterator:
-    """
-    The primary function to get the iterator for the training sequence
-
-    Args:
-        snapshot_path (str, Path): The path or string for the snapshot with which we are training the model
-        batch_size (int): The batch size for the train dataloader, extra batches will be dropped!
-        grad_quantile (float): The quantile threshold for determining smooth regions in the FEM solution
-        num_workers (int): Num of workers to hold the dataset in after loading
-        pin_memory (bool): Whether to pin the workers in the memory
-    
-    Returns:
-        Iterator: A list of the created dataloader iterators in train/val/test order, val and test being infinite iterators
-    """
-
-    loader= get_dataloaders(snapshot_path, batch_size, grad_quantile, num_workers, pin_memory)
-    iterator = _get_inf_iterator(loader) # Finite iterator for training
-
-    return iterator
-
-
-def get_dataloaders(snapshot_path: Union[str, Path], batch_size: int, grad_quantile: float, num_workers: int = 8, pin_memory: bool = True) -> DataLoader:
+def get_dataloaders(
+        snapshot_path: Union[str, Path], 
+        U1_ref: float, U2_ref: float, U3_ref: float,
+        batch_size: int, 
+        grad_quantile: float, 
+        num_workers: int, 
+        pin_memory: bool
+    ) -> DataLoader:
     """
     The primary function to get the dataloaders for the training sequence
 
     Args:
         snapshot_path (str, Path): The path or string for the snapshot with which we are training the model
+        U1-3_ref (float): The reference scales for the conserved variables, used for Y-scaling in the loss function
         batch_size (int): The batch size for the train dataloader, extra batches will be dropped!
         grad_quantile (float): The quantile threshold for determining smooth regions in the FEM solution
         num_workers (int): Num of workers to hold the dataset in after loading
@@ -110,7 +94,7 @@ def get_dataloaders(snapshot_path: Union[str, Path], batch_size: int, grad_quant
     """
     # Unpack data
     data = _load_saved_data(snapshot_path)
-    dataset = FemSnapshots(data, grad_quantile)
+    dataset = FemSnapshots(data, grad_quantile, U1_ref, U2_ref, U3_ref)
 
     # Build the dataloader
     dataloader = DataLoader(
@@ -121,7 +105,7 @@ def get_dataloaders(snapshot_path: Union[str, Path], batch_size: int, grad_quant
         pin_memory=pin_memory,
         drop_last=False # Fixed to false
     ) 
-    # append the number of training batch as a property to the dataset\
+    # append the number of training batch as a property to the dataset
     dataloader.dataset.n_tb = len(dataloader)
     
     return dataloader
@@ -169,3 +153,23 @@ def _get_inf_iterator(dataloader: DataLoader) -> Iterator:
     """
     return InfiniteCycle(dataloader)
 
+def get_data(snapshot_path: Union[str, Path], U1_ref: float, U2_ref: float, U3_ref: float, batch_size: int, grad_quantile: float, num_workers: int = 8, pin_memory: bool = True) -> Iterator:
+    """
+    The primary function to get the iterator for the training sequence
+
+    Args:
+        snapshot_path (str, Path): The path or string for the snapshot with which we are training the model
+        U1-3_ref (float): The reference scale for the conserved variables, used for Y-scaling
+        batch_size (int): The batch size for the train dataloader, extra batches will be dropped!
+        grad_quantile (float): The quantile threshold for determining smooth regions in the FEM solution
+        num_workers (int): Num of workers to hold the dataset in after loading
+        pin_memory (bool): Whether to pin the workers in the memory
+    
+    Returns:
+        Iterator: A list of the created dataloader iterators in train/val/test order, val and test being infinite iterators
+    """
+
+    loader= get_dataloaders(snapshot_path, U1_ref, U2_ref, U3_ref, batch_size, grad_quantile, num_workers, pin_memory)
+    iterator = _get_inf_iterator(loader) # Finite iterator for training
+
+    return iterator

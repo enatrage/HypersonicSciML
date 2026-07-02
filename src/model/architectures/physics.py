@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-def euler_fluxes(U: torch.Tensor, gamma: float) -> torch.Tensor:
+def _euler_fluxes(U: torch.Tensor, gamma: float) -> torch.Tensor:
     """
     Computes the 1D Euler fluxes F(U).
     U shape: (N, 3) representing (rho, q, E) where q = rho * u.
@@ -19,17 +19,16 @@ def euler_fluxes(U: torch.Tensor, gamma: float) -> torch.Tensor:
     return torch.cat([q, q * u + p, (E + p) * u], dim=-1)
 
 
-def pde_residual(model: nn.Module, t: torch.Tensor, x: torch.Tensor, gamma: float) -> torch.Tensor:
+def pde_residual_euler(U_pred: torch.Tensor, t: torch.Tensor, x: torch.Tensor, gamma: float) -> torch.Tensor:
     """
     Computes the strong-form residual of the 1D Euler equations.
     t, x must have requires_grad=True.
     """
-    U = model(t, x)
-    F = euler_fluxes(U, gamma)
+    F = _euler_fluxes(U_pred, gamma)
     
     Ut_cols, Fx_cols = [], []
     for k in range(3):
-        Uk = U[:, k:k+1]
+        Uk = U_pred[:, k:k+1]
         Fk = F[:, k:k+1]
         
         # dU/dt

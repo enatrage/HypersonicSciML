@@ -10,7 +10,7 @@ class ReduceLROnPlateauConfig(BaseModel):
     mode: Literal["min", "max"] = Field("min", description="Quantity monitored: 'min' for loss residuals, 'max' for accuracy/metrics")
     factor: float = Field(0.1, description="Multiplicative factor of learning rate decay. new_lr = lr * factor")
     patience: int = Field(10, description="Number of epochs with no improvement after which learning rate will be reduced")
-    threshold: float = Field(1e-4, description="Threshold for measuring the new optimum, to only focus on significant changes and ignore noise")
+    threshold: float = Field(1.0e-4, description="Threshold for measuring the new optimum, to only focus on significant changes and ignore noise")
     min_lr: float = Field(0.0, description="A lower bound on the learning rate of all parameter groups")
 
 class CosAnnConfig(BaseModel):

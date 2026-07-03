@@ -4,8 +4,6 @@ import logging
 import torch
 import torch.nn as nn
 
-from configs.hyperparameters import TrainConfig
-
 from src.master.schemas import FemConfig
 from src.model.schemas import TrainConfig, DataConfig, ExportConfig
 from src.model.utils.misc import get_n_params, check_lrtype_ifstep, build_physics_package

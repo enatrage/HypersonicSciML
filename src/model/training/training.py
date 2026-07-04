@@ -47,7 +47,7 @@ def train_model(
             optimizer.zero_grad(set_to_none=True) # Zero the grad first
 
             t_train, x_train, U_target = next(data_iterator) # get the batch, move to device
-            t_train = t_train.to(device); x_train = x_train.to(device); U_target.to(device)
+            t_train = t_train.to(device); x_train = x_train.to(device); U_target = U_target.to(device)
 
             U_pred = model(t_train, x_train) # Get pred
             loss_total, loss_data, loss_pde, w_data, w_pde = loss_fn( 
@@ -79,7 +79,7 @@ def train_model(
                     val = tensor # Gets the singular item
                     total_losses[key] += val # Accumulates it to total
                     log_payload[f'train/{key}_loss_batch'] = val # Adds to the WandB payload
-                    print_parts.append(f'{loss_str_tracker[key]}_Loss: {val:.4f}') # Adds to the print string
+                    print_parts.append(f'{loss_str_tracker[key]}_Loss: {val:.8f}') # Adds to the print string
             wandb.log(log_payload)
             wandb.log({"train/w_data": w_data, "train/w_pde": w_pde}) # Log the weights too
 
@@ -91,7 +91,7 @@ def train_model(
         if total_losses['total'] < best_val_loss:
             best_val_loss = total_losses['total']
             torch.save(model.state_dict(), export_cfg.model_save_path)
-            logging.info(f"Model: Best model saved at epoch {epoch+1} with total loss {best_val_loss:.4f}")
+            logging.info(f"Model: Best model saved at epoch {epoch+1} with total loss {best_val_loss:.8f}")
             
         # Log average train at the end of each epoch results
         log_payload, print_parts = {}, []
@@ -104,7 +104,7 @@ def train_model(
                 else:
                     wb_key = f"general_detailed/train_average_{key}_loss"
                 log_payload[wb_key] = avg
-                print_parts.append(f"Average {display_name} Loss: {avg:.4f}")
+                print_parts.append(f"Average {display_name} Loss: {avg:.8f}")
         wandb.log(log_payload)
         if print_parts:
             print_parts[0] = f"Model: Epoch {epoch} Train Losses: " + print_parts[0]

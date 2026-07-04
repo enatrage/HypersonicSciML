@@ -54,6 +54,7 @@ class FemSnapshots(Dataset):
         self.x = torch.from_numpy(xx).float()
         self.U = torch.from_numpy(UU).float()
         self.is_smooth = torch.from_numpy(smooth).bool() # This is accessed by some downstream logic, even though not returned in __getitem__
+        self.smooth_map = self.is_smooth.view(self.K_s, self.Nx)
 
         # Build the U_ref and the Y_inv factors
         # Reference scales used by YZβ and by the PINN's Y-scaled losses.

@@ -53,13 +53,13 @@ class CheatLoss(nn.Module):
         device = U_pred.device
 
         # Get the PDE loss
-        #L_pde = self.get_pde_loss(device)
+        L_pde = self.get_pde_loss(device)
         # Get the data loss
         L_data = self.get_data_loss(U_pred, U_target)
 
         # Get the current weights from the schedule and return the weighted sum
         w_data, w_pde = self._yield_scales()
-        return w_data * L_data + w_pde * 0, L_data, 0, w_data, w_pde
+        return w_data * L_data + w_pde * L_pde, L_data, L_pde, w_data, w_pde
 
 
     def get_data_loss(self, U_pred: torch.Tensor, U_target: torch.Tensor) -> torch.Tensor:
@@ -87,7 +87,8 @@ class CheatLoss(nn.Module):
         if t_c.shape[0] < 16:
             L_pde = torch.zeros((), device=device)
         else:
-            R = self.pde_residual_fn(self.model, t_c, x_c, self.gamma) * self.Y_inv
+            U_pde = self.model(t_c, x_c)
+            R = self.pde_residual_fn(U_pde, t_c, x_c, self.gamma) * self.Y_inv
             R = torch.clamp(R, -self.res_clip, self.res_clip)
             L_pde = R.pow(2).mean()
         return L_pde

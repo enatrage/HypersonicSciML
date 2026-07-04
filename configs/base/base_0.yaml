@@ -30,8 +30,8 @@ fem_config:
     k_s: 10
 
   io:
-    snapshot_path: "tests/ops_refactor/test_2/snapshot.npz"
-    plot_path: "tests/ops_refactor/test_2/fem_plot.png"
+    snapshot_path: "runs/default/snapshot.npz"
+    plot_path: "runs/default/fem_plot.png"
 
 
 # Network config
@@ -70,13 +70,13 @@ net_config:
 
   training:
     seed: 0
-    device: "cpu"
+    device: "cuda"
     grad_clip: 1.0
     debug_mode: FALSE
-    n_epochs: 50
+    n_epochs: 5000
 
   data:
-    snapshot_path: "tests/ops_refactor/test_2/snapshot.npz"
+    snapshot_path: "runs/default/snapshot.npz"
     num_workers: 0
     pin_memory: TRUE
     batch_size: 1024
@@ -85,11 +85,11 @@ net_config:
   export:
     mode: "online"
     wandb_entity: "Hypersonics"
-    wandb_project: "Refactor"
-    wandb_name: "test_2"
-    local_log_path: "tests/ops_refactor/test_2/model_log.txt"
-    model_save_path: "tests/ops_refactor/test_2/model.pt"
-    plot_comp_path: "tests/ops_refactor/test_2/model_comp_plot.png"
+    wandb_project: "Default"
+    wandb_name: "Default"
+    local_log_path: "runs/default/model_log.txt"
+    model_save_path: "runs/default/model.pt"
+    plot_comp_path: "runs/default/model_comp_plot.png"
 
 
 

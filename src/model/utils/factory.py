@@ -22,7 +22,7 @@ def build_loss(config: LossConfig, model: nn.Module, data: FemSnapshots) -> nn.M
     kwargs = config.model_dump(exclude={"type"})
     if config.type == "cheat_loss":
         from ..loss.losses import CheatLoss
-        return CheatLoss(model=model, smooth_map=data.is_smooth, Y_inv=data.Y_inv, 
+        return CheatLoss(model=model, smooth_map=data.smooth_map, Y_inv=data.Y_inv, 
                          t_axis=data.t_axis, x_axis=data.x_axis, gamma=data.gamma, 
                          t_start=data.t_start, t_final=data.t_final, **kwargs)
         

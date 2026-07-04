@@ -1,0 +1,6 @@
+# Network config
+net_config:
+
+  training:
+
+    n_epochs: 5000

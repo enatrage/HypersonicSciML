@@ -1,5 +1,5 @@
 from omegaconf import OmegaConf
-from typing import Optional, List
+from typing import Optional
 from .schemas import MasterConfig
 
 def build_and_validate_config(

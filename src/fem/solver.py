@@ -94,8 +94,8 @@ def run_supg_yzb(
     U3_ref  = Constant(U3_ref_v)
 
     mesh = IntervalMesh(nx, 0.0, 1.0)
-    logging.log("FEM: Number of Cells:", mesh.num_cells())
-    logging.log("FEM: Number of Nodes:", mesh.num_vertices())
+    logging.info(f"FEM: Number of Cells: {mesh.num_cells()}")
+    logging.info(f"FEM: Number of Nodes: {mesh.num_vertices()}")
 
     P1 = FiniteElement('P', _interval, 1)
     element = MixedElement([P1, P1, P1])
@@ -200,7 +200,7 @@ def run_supg_yzb(
         U_n.assign(U)
         rho_n, q_n, E_n = split(U_n)
         U_n_vec = as_vector([rho_n, q_n, E_n])
-        logging.log("FEM: t =", t)
+        logging.info("FEM: t =", t)
 
     np.savez(snapshot_path,
              x        = x_nodes_sorted,
@@ -215,5 +215,5 @@ def run_supg_yzb(
              dt       = np.float64(dt),
              nx       = np.int64(nx))
     
-    logging.log(f"FEM: At {snapshot_path} saved ({k_s} snapshots, {x_nodes_sorted.size} nodes each")
+    logging.info(f"FEM: At {snapshot_path} saved ({k_s} snapshots, {x_nodes_sorted.size} nodes each")
              

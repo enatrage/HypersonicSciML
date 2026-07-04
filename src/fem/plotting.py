@@ -9,6 +9,8 @@ def plot_fem_vs_exact(gamma_v, rho_L_v, u_L_v, p_L_v, rho_R_v, u_R_v, p_R_v, x_d
     xpoints = np.linspace(0.0, 1.0, nx+1) # Number of nodes +1 than number of cells
     rho_ex, u_ex, p_ex = exact_riemann(xpoints, t_final, gamma_v, rho_L_v, u_L_v, p_L_v, rho_R_v, u_R_v, p_R_v, x_diaph)
     e_ex = p_ex / ((gamma_v - 1.0) * rho_ex)
+
+    if not snapshot_path.endswith(".npz"): snapshot_path=snapshot_path+".npz"
     fem_data = np.load(snapshot_path)
     
     rho_snap = fem_data['rho_snap'] # Assuming the snapshot file contains 'rho_snap', 'q_snap', and 'E_snap' arrays

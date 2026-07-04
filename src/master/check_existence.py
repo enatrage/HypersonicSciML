@@ -26,8 +26,8 @@ def check_fem_existence(snapshot_path: str, plot_path: str, force_fem: bool) -> 
     else:
         return True
 
-def check_model_existence(local_log_path: str, model_save_path: str, plot_train_path: str, plot_comp_path: str, force_model: bool):
-    paths_to_check = [local_log_path, model_save_path, plot_train_path, plot_comp_path]
+def check_model_existence(local_log_path: str, model_save_path: str, plot_comp_path: str, force_model: bool):
+    paths_to_check = [local_log_path, model_save_path, plot_comp_path]
     existing_paths = [path for path in paths_to_check if Path(path).exists()]
 
     if existing_paths:

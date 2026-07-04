@@ -41,7 +41,7 @@ def train_model(
         model.train() # Set the model to training mode just in case some val gets added downstream
         total_losses = {k: 0.0 for k in loss_str_tracker.keys()}
 
-        logging.info(f"Epoch {epoch}: Training Step{f', LR: {lr_scheduler.get_last_lr()[0]:.8f}' if lr_scheduler else ''}")
+        logging.info(f"Model: Epoch {epoch}, Training Step{f', LR: {lr_scheduler.get_last_lr()[0]:.8f}' if lr_scheduler else ''}")
         for _ in range(n_tb):
 
             optimizer.zero_grad(set_to_none=True) # Zero the grad first
@@ -51,7 +51,7 @@ def train_model(
 
             U_pred = model(t_train, x_train) # Get pred
             loss_total, loss_data, loss_pde, w_data, w_pde = loss_fn( 
-                model=model, U_pred=U_pred, U_target=U_target
+                U_pred=U_pred, U_target=U_target
             ) # Get loss
 
             if debug_mode:
@@ -72,11 +72,11 @@ def train_model(
             optimizer.step()
 
             # Log the losses for this step
-            step_losses = [('total', loss_total.item()), ('data', loss_data.item()), ('pde', loss_pde.item())]
+            step_losses = [('total', loss_total), ('data', loss_data), ('pde', loss_pde)]
             log_payload = {"epoch": epoch}; print_parts = [] # Init the log payload
             for key, tensor in step_losses: 
                 if tensor is not None:
-                    val = tensor.item() # Gets the singular item
+                    val = tensor # Gets the singular item
                     total_losses[key] += val # Accumulates it to total
                     log_payload[f'train/{key}_loss_batch'] = val # Adds to the WandB payload
                     print_parts.append(f'{loss_str_tracker[key]}_Loss: {val:.4f}') # Adds to the print string
@@ -123,7 +123,7 @@ def train_model(
     # Get the final model evaluation and plot
     model.eval()
     with torch.no_grad():
-        x_test = torch.linspace(0.0, 1.0, data_iterator.dataset.Nx + 1, device=device).view(-1, 1)
+        x_test = torch.linspace(0.0, 1.0, data_iterator.dataset.Nx, device=device).view(-1, 1)
         t_test = torch.full_like(x_test, data_iterator.dataset.t_final)
         # Evaluate and transfer to CPU NumPy
         U_pred_test = model(t_test, x_test).cpu()

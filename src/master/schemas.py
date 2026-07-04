@@ -8,7 +8,7 @@ from src.model.schemas import TrainConfig, DataConfig, ExportConfig
 
 from src.fem.schemas import ThermodynamicsConfig, DomainConfig, InitialConditionsConfig, ScalingConfig, FemIOConfig
 
-class ModelConfig(BaseModel):
+class NetConfig(BaseModel):
     architecture: ArchitectureConfig
     loss: LossConfig 
     optimizer: OptimizerConfig
@@ -52,4 +52,4 @@ class RunModeConfig(BaseModel):
 class MasterConfig(BaseModel):
     run_mode: RunModeConfig
     fem_config: FemConfig
-    model_config: ModelConfig
+    net_config: NetConfig

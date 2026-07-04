@@ -5,7 +5,7 @@ class AdamWConfig(BaseModel):
     type: Literal["adam_w"] = "adam_w"
     lr: float = Field(1.0e-3, description="Learning rate")
     betas: Tuple[float, float] = Field((0.9, 0.999), description="Coefficients used for computing running averages of gradient and its square")
-    eps: float = Field(1,.0e-8, description="Term added to the denominator to improve numerical stability")
+    eps: float = Field(1.0e-8, description="Term added to the denominator to improve numerical stability")
     weight_decay: float = Field(1.0e-2, description="Weight decay coefficient. In AdamW, this is decoupled from the gradient update")
     amsgrad: bool = Field(False, description="Whether to use the AMSGrad variant of this algorithm")
 

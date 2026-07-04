@@ -1,10 +1,10 @@
-from src.master.schemas import ModelConfig, FemConfig
+from src.master.schemas import NetConfig, FemConfig
 
 import logging
 import sys
 import wandb
 
-def setup_wandb(model_config: ModelConfig, fem_config: FemConfig, wandb_entity: str, wandb_project: str, wandb_name: str):
+def setup_wandb(model_config: NetConfig, fem_config: FemConfig, wandb_entity: str, wandb_project: str, wandb_name: str):
 
     settings = wandb.Settings(
         show_errors=True,
@@ -38,6 +38,7 @@ def setup_logging(local_log_path: str):
     logging.basicConfig(
     level=logging.INFO,
     format='[%(asctime)s] %(message)s',
+    force=True,
     datefmt='%Y-%m-%d %H:%M:%S',
     handlers=[
         logging.FileHandler(local_log_path, mode='w'), 

@@ -94,7 +94,7 @@ def get_dataloaders(
     """
     # Unpack data
     data = _load_saved_data(snapshot_path)
-    dataset = FemSnapshots(data, grad_quantile, U1_ref, U2_ref, U3_ref)
+    dataset = FemSnapshots(data, U1_ref, U2_ref, U3_ref, grad_quantile)
 
     # Build the dataloader
     dataloader = DataLoader(
@@ -113,11 +113,10 @@ def get_dataloaders(
 
 def _load_saved_data(snapshot_path: Union[str, Path]):
     snapshot_path_str = str(snapshot_path)
-    if snapshot_path_str.endswith(".npz"):
-        data = np.load(snapshot_path_str)
-        return data
-    else:
-        raise ValueError(f"Non-implemented data loading mechanism for the path: {snapshot_path_str}")
+    if not snapshot_path_str.endswith(".npz"): snapshot_path_str = snapshot_path_str+".npz"
+    data = np.load(snapshot_path_str)
+    return data
+
 
 class InfiniteCycle:
     """
@@ -169,7 +168,11 @@ def get_data(snapshot_path: Union[str, Path], U1_ref: float, U2_ref: float, U3_r
         Iterator: A list of the created dataloader iterators in train/val/test order, val and test being infinite iterators
     """
 
-    loader= get_dataloaders(snapshot_path, U1_ref, U2_ref, U3_ref, batch_size, grad_quantile, num_workers, pin_memory)
+    loader= get_dataloaders(
+        snapshot_path=snapshot_path, 
+        U1_ref=U1_ref, U2_ref=U2_ref, U3_ref=U3_ref, 
+        grad_quantile=grad_quantile, batch_size=batch_size, 
+        num_workers=num_workers, pin_memory=pin_memory)
     iterator = _get_inf_iterator(loader) # Finite iterator for training
 
     return iterator

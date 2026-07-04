@@ -33,7 +33,7 @@ def main():
     )
 
     orchestrate_model(
-        cfg_model=master_cfg.model_config, cfg_fem=master_cfg.fem_config, run_model=run_model, force_model=force_model
+        cfg_net=master_cfg.net_config, cfg_fem=master_cfg.fem_config, run_model=run_model, force_model=force_model
     )
 
 if __name__ == "__main__":

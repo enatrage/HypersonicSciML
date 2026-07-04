@@ -29,7 +29,7 @@ def fem_runner(cfg: FemConfig):
     # Runs the YZB stabilized SUPG and saves the created snapshot
     run_supg_yzb(
         rho_L_v=rho_L_v, u_L_v=u_L_v, p_L_v=p_L_v, rho_R_v=rho_R_v, u_R_v=u_R_v, p_R_v=p_R_v,
-        gamma_v=gamma_v, x_diaph=x_diaph, t_final=t_final, dt=dt, 
+        gamma_v=gamma_v, x_diaph=x_diaph, nx=nx, t_final=t_final, dt=dt, 
         U1_ref_v=U1_ref_v, U2_ref_v=U2_ref_v, U3_ref_v=U3_ref_v, beta_v=beta_v, k_s=k_s, snapshot_path=snapshot_path
     )
 

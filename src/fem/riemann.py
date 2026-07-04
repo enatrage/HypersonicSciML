@@ -2,16 +2,17 @@
 #                       Exact Riemann solver (Toro, 2009)
 # ===========================================================================
 
-from configs.hyperparameters import (GAMMA_V, RHO_L_V, U_L_V, P_L_V,
-                                            RHO_R_V, U_R_V, P_R_V, X_DIAPH)
+import numpy as np
+from scipy.optimize import brentq
 
-def exact_riemann(x_arr, t_eval,
-                  gamma_v=GAMMA_V,
-                  rho_L=RHO_L_V, u_L=U_L_V, p_L=P_L_V,
-                  rho_R=RHO_R_V, u_R=U_R_V, p_R=P_R_V,
-                  x0=X_DIAPH):
-    import numpy as np
-    from scipy.optimize import brentq
+def exact_riemann(x_arr, t_eval, gamma_v, rho_L, u_L, p_L, rho_R, u_R, p_R, x0):
+    """
+    The mapping is as follows:
+
+    x_arr, t_eval, gamma_v=GAMMA_V, rho_L=RHO_L_V, u_L=U_L_V, p_L=P_L_V,
+    rho_R=RHO_R_V, u_R=U_R_V, p_R=P_R_V, x0=X_DIAPH
+    """
+
     g  = gamma_v
     aL = np.sqrt(g * p_L / rho_L)
     aR = np.sqrt(g * p_R / rho_R)

@@ -1,0 +1,205 @@
+[2026-07-04 05:12:53] Model: Logging and WandB setup and initialized
+[2026-07-04 05:12:53] Model: Device set to CPU
+[2026-07-04 05:12:53] Model: Data figured out
+[2026-07-04 05:12:54] Model: The model, loss, optimizer, scheduler built
+[2026-07-04 05:12:54] Model: Training function called
+[2026-07-04 05:12:54] Training has started, will train for 50 epochs
+[2026-07-04 05:12:54] Model: Epoch 0, Training Step, LR: 0.00080000
+[2026-07-04 05:12:55] Model: Best model saved at epoch 1 with total loss 0.6518
+[2026-07-04 05:12:55] Model: Epoch 0 Train Losses: Average Total Loss: 0.2173 | Average Data Loss: 0.0876 | Average PDE Loss: 1.2966
+[2026-07-04 05:12:56] Model: Epoch 0, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:12:56] Model: Epoch 1, Training Step, LR: 0.00080000
+[2026-07-04 05:12:57] Model: Best model saved at epoch 2 with total loss 0.3504
+[2026-07-04 05:12:57] Model: Epoch 1 Train Losses: Average Total Loss: 0.1168 | Average Data Loss: 0.0845 | Average PDE Loss: 0.3227
+[2026-07-04 05:12:57] Model: Epoch 1, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:12:57] Model: Epoch 2, Training Step, LR: 0.00080000
+[2026-07-04 05:12:57] Model: Best model saved at epoch 3 with total loss 0.2755
+[2026-07-04 05:12:57] Model: Epoch 2 Train Losses: Average Total Loss: 0.0918 | Average Data Loss: 0.0800 | Average PDE Loss: 0.1180
+[2026-07-04 05:12:57] Model: Epoch 2, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:12:58] Model: Epoch 3, Training Step, LR: 0.00080000
+[2026-07-04 05:12:58] Model: Best model saved at epoch 4 with total loss 0.2523
+[2026-07-04 05:12:58] Model: Epoch 3 Train Losses: Average Total Loss: 0.0841 | Average Data Loss: 0.0788 | Average PDE Loss: 0.0531
+[2026-07-04 05:12:58] Model: Epoch 3, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:12:58] Model: Epoch 4, Training Step, LR: 0.00080000
+[2026-07-04 05:12:59] Model: Best model saved at epoch 5 with total loss 0.2382
+[2026-07-04 05:12:59] Model: Epoch 4 Train Losses: Average Total Loss: 0.0794 | Average Data Loss: 0.0763 | Average PDE Loss: 0.0309
+[2026-07-04 05:12:59] Model: Epoch 4, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:12:59] Model: Epoch 5, Training Step, LR: 0.00080000
+[2026-07-04 05:13:00] Model: Best model saved at epoch 6 with total loss 0.2250
+[2026-07-04 05:13:00] Model: Epoch 5 Train Losses: Average Total Loss: 0.0750 | Average Data Loss: 0.0724 | Average PDE Loss: 0.0258
+[2026-07-04 05:13:00] Model: Epoch 5, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:00] Model: Epoch 6, Training Step, LR: 0.00080000
+[2026-07-04 05:13:01] Model: Best model saved at epoch 7 with total loss 0.2030
+[2026-07-04 05:13:01] Model: Epoch 6 Train Losses: Average Total Loss: 0.0677 | Average Data Loss: 0.0657 | Average PDE Loss: 0.0200
+[2026-07-04 05:13:01] Model: Epoch 6, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:01] Model: Epoch 7, Training Step, LR: 0.00080000
+[2026-07-04 05:13:02] Model: Best model saved at epoch 8 with total loss 0.1864
+[2026-07-04 05:13:02] Model: Epoch 7 Train Losses: Average Total Loss: 0.0621 | Average Data Loss: 0.0603 | Average PDE Loss: 0.0181
+[2026-07-04 05:13:02] Model: Epoch 7, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:02] Model: Epoch 8, Training Step, LR: 0.00080000
+[2026-07-04 05:13:02] Model: Best model saved at epoch 9 with total loss 0.1665
+[2026-07-04 05:13:02] Model: Epoch 8 Train Losses: Average Total Loss: 0.0555 | Average Data Loss: 0.0527 | Average PDE Loss: 0.0276
+[2026-07-04 05:13:02] Model: Epoch 8, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:03] Model: Epoch 9, Training Step, LR: 0.00080000
+[2026-07-04 05:13:03] Model: Best model saved at epoch 10 with total loss 0.1528
+[2026-07-04 05:13:03] Model: Epoch 9 Train Losses: Average Total Loss: 0.0509 | Average Data Loss: 0.0476 | Average PDE Loss: 0.0334
+[2026-07-04 05:13:03] Model: Epoch 9, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:03] Model: Epoch 10, Training Step, LR: 0.00080000
+[2026-07-04 05:13:04] Model: Best model saved at epoch 11 with total loss 0.1408
+[2026-07-04 05:13:04] Model: Epoch 10 Train Losses: Average Total Loss: 0.0469 | Average Data Loss: 0.0436 | Average PDE Loss: 0.0330
+[2026-07-04 05:13:04] Model: Epoch 10, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:05] Model: Epoch 11, Training Step, LR: 0.00080000
+[2026-07-04 05:13:05] Model: Best model saved at epoch 12 with total loss 0.1268
+[2026-07-04 05:13:05] Model: Epoch 11 Train Losses: Average Total Loss: 0.0423 | Average Data Loss: 0.0393 | Average PDE Loss: 0.0296
+[2026-07-04 05:13:05] Model: Epoch 11, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:06] Model: Epoch 12, Training Step, LR: 0.00080000
+[2026-07-04 05:13:06] Model: Best model saved at epoch 13 with total loss 0.1153
+[2026-07-04 05:13:06] Model: Epoch 12 Train Losses: Average Total Loss: 0.0384 | Average Data Loss: 0.0362 | Average PDE Loss: 0.0221
+[2026-07-04 05:13:06] Model: Epoch 12, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:06] Model: Epoch 13, Training Step, LR: 0.00080000
+[2026-07-04 05:13:07] Model: Best model saved at epoch 14 with total loss 0.1057
+[2026-07-04 05:13:07] Model: Epoch 13 Train Losses: Average Total Loss: 0.0352 | Average Data Loss: 0.0331 | Average PDE Loss: 0.0217
+[2026-07-04 05:13:07] Model: Epoch 13, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:07] Model: Epoch 14, Training Step, LR: 0.00080000
+[2026-07-04 05:13:08] Model: Best model saved at epoch 15 with total loss 0.0949
+[2026-07-04 05:13:08] Model: Epoch 14 Train Losses: Average Total Loss: 0.0316 | Average Data Loss: 0.0297 | Average PDE Loss: 0.0193
+[2026-07-04 05:13:08] Model: Epoch 14, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:08] Model: Epoch 15, Training Step, LR: 0.00080000
+[2026-07-04 05:13:09] Model: Best model saved at epoch 16 with total loss 0.0879
+[2026-07-04 05:13:09] Model: Epoch 15 Train Losses: Average Total Loss: 0.0293 | Average Data Loss: 0.0276 | Average PDE Loss: 0.0174
+[2026-07-04 05:13:09] Model: Epoch 15, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:09] Model: Epoch 16, Training Step, LR: 0.00080000
+[2026-07-04 05:13:10] Model: Best model saved at epoch 17 with total loss 0.0797
+[2026-07-04 05:13:10] Model: Epoch 16 Train Losses: Average Total Loss: 0.0266 | Average Data Loss: 0.0250 | Average PDE Loss: 0.0159
+[2026-07-04 05:13:10] Model: Epoch 16, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:10] Model: Epoch 17, Training Step, LR: 0.00080000
+[2026-07-04 05:13:11] Model: Best model saved at epoch 18 with total loss 0.0717
+[2026-07-04 05:13:11] Model: Epoch 17 Train Losses: Average Total Loss: 0.0239 | Average Data Loss: 0.0222 | Average PDE Loss: 0.0165
+[2026-07-04 05:13:11] Model: Epoch 17, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:11] Model: Epoch 18, Training Step, LR: 0.00080000
+[2026-07-04 05:13:12] Model: Best model saved at epoch 19 with total loss 0.0652
+[2026-07-04 05:13:12] Model: Epoch 18 Train Losses: Average Total Loss: 0.0217 | Average Data Loss: 0.0202 | Average PDE Loss: 0.0151
+[2026-07-04 05:13:12] Model: Epoch 18, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:12] Model: Epoch 19, Training Step, LR: 0.00080000
+[2026-07-04 05:13:13] Model: Best model saved at epoch 20 with total loss 0.0575
+[2026-07-04 05:13:13] Model: Epoch 19 Train Losses: Average Total Loss: 0.0192 | Average Data Loss: 0.0177 | Average PDE Loss: 0.0148
+[2026-07-04 05:13:13] Model: Epoch 19, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:13] Model: Epoch 20, Training Step, LR: 0.00080000
+[2026-07-04 05:13:14] Model: Best model saved at epoch 21 with total loss 0.0500
+[2026-07-04 05:13:14] Model: Epoch 20 Train Losses: Average Total Loss: 0.0167 | Average Data Loss: 0.0154 | Average PDE Loss: 0.0128
+[2026-07-04 05:13:14] Model: Epoch 20, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:14] Model: Epoch 21, Training Step, LR: 0.00080000
+[2026-07-04 05:13:15] Model: Best model saved at epoch 22 with total loss 0.0430
+[2026-07-04 05:13:15] Model: Epoch 21 Train Losses: Average Total Loss: 0.0143 | Average Data Loss: 0.0133 | Average PDE Loss: 0.0102
+[2026-07-04 05:13:15] Model: Epoch 21, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:15] Model: Epoch 22, Training Step, LR: 0.00080000
+[2026-07-04 05:13:16] Model: Best model saved at epoch 23 with total loss 0.0362
+[2026-07-04 05:13:16] Model: Epoch 22 Train Losses: Average Total Loss: 0.0121 | Average Data Loss: 0.0111 | Average PDE Loss: 0.0095
+[2026-07-04 05:13:16] Model: Epoch 22, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:16] Model: Epoch 23, Training Step, LR: 0.00080000
+[2026-07-04 05:13:17] Model: Best model saved at epoch 24 with total loss 0.0303
+[2026-07-04 05:13:17] Model: Epoch 23 Train Losses: Average Total Loss: 0.0101 | Average Data Loss: 0.0092 | Average PDE Loss: 0.0087
+[2026-07-04 05:13:17] Model: Epoch 23, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:17] Model: Epoch 24, Training Step, LR: 0.00080000
+[2026-07-04 05:13:17] Model: Best model saved at epoch 25 with total loss 0.0248
+[2026-07-04 05:13:17] Model: Epoch 24 Train Losses: Average Total Loss: 0.0083 | Average Data Loss: 0.0075 | Average PDE Loss: 0.0076
+[2026-07-04 05:13:17] Model: Epoch 24, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:18] Model: Epoch 25, Training Step, LR: 0.00080000
+[2026-07-04 05:13:18] Model: Best model saved at epoch 26 with total loss 0.0202
+[2026-07-04 05:13:18] Model: Epoch 25 Train Losses: Average Total Loss: 0.0067 | Average Data Loss: 0.0060 | Average PDE Loss: 0.0076
+[2026-07-04 05:13:18] Model: Epoch 25, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:19] Model: Epoch 26, Training Step, LR: 0.00080000
+[2026-07-04 05:13:19] Model: Best model saved at epoch 27 with total loss 0.0164
+[2026-07-04 05:13:19] Model: Epoch 26 Train Losses: Average Total Loss: 0.0055 | Average Data Loss: 0.0048 | Average PDE Loss: 0.0072
+[2026-07-04 05:13:19] Model: Epoch 26, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:19] Model: Epoch 27, Training Step, LR: 0.00080000
+[2026-07-04 05:13:20] Model: Best model saved at epoch 28 with total loss 0.0133
+[2026-07-04 05:13:20] Model: Epoch 27 Train Losses: Average Total Loss: 0.0044 | Average Data Loss: 0.0038 | Average PDE Loss: 0.0064
+[2026-07-04 05:13:20] Model: Epoch 27, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:20] Model: Epoch 28, Training Step, LR: 0.00080000
+[2026-07-04 05:13:21] Model: Best model saved at epoch 29 with total loss 0.0109
+[2026-07-04 05:13:21] Model: Epoch 28 Train Losses: Average Total Loss: 0.0036 | Average Data Loss: 0.0030 | Average PDE Loss: 0.0059
+[2026-07-04 05:13:21] Model: Epoch 28, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:21] Model: Epoch 29, Training Step, LR: 0.00080000
+[2026-07-04 05:13:22] Model: Best model saved at epoch 30 with total loss 0.0089
+[2026-07-04 05:13:22] Model: Epoch 29 Train Losses: Average Total Loss: 0.0030 | Average Data Loss: 0.0025 | Average PDE Loss: 0.0052
+[2026-07-04 05:13:22] Model: Epoch 29, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:22] Model: Epoch 30, Training Step, LR: 0.00080000
+[2026-07-04 05:13:22] Model: Best model saved at epoch 31 with total loss 0.0074
+[2026-07-04 05:13:22] Model: Epoch 30 Train Losses: Average Total Loss: 0.0025 | Average Data Loss: 0.0020 | Average PDE Loss: 0.0045
+[2026-07-04 05:13:22] Model: Epoch 30, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:23] Model: Epoch 31, Training Step, LR: 0.00080000
+[2026-07-04 05:13:23] Model: Best model saved at epoch 32 with total loss 0.0065
+[2026-07-04 05:13:23] Model: Epoch 31 Train Losses: Average Total Loss: 0.0022 | Average Data Loss: 0.0018 | Average PDE Loss: 0.0038
+[2026-07-04 05:13:23] Model: Epoch 31, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:23] Model: Epoch 32, Training Step, LR: 0.00080000
+[2026-07-04 05:13:24] Model: Best model saved at epoch 33 with total loss 0.0057
+[2026-07-04 05:13:24] Model: Epoch 32 Train Losses: Average Total Loss: 0.0019 | Average Data Loss: 0.0016 | Average PDE Loss: 0.0032
+[2026-07-04 05:13:24] Model: Epoch 32, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:24] Model: Epoch 33, Training Step, LR: 0.00080000
+[2026-07-04 05:13:25] Model: Best model saved at epoch 34 with total loss 0.0052
+[2026-07-04 05:13:25] Model: Epoch 33 Train Losses: Average Total Loss: 0.0017 | Average Data Loss: 0.0015 | Average PDE Loss: 0.0028
+[2026-07-04 05:13:25] Model: Epoch 33, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:25] Model: Epoch 34, Training Step, LR: 0.00080000
+[2026-07-04 05:13:26] Model: Best model saved at epoch 35 with total loss 0.0050
+[2026-07-04 05:13:26] Model: Epoch 34 Train Losses: Average Total Loss: 0.0017 | Average Data Loss: 0.0014 | Average PDE Loss: 0.0027
+[2026-07-04 05:13:26] Model: Epoch 34, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:26] Model: Epoch 35, Training Step, LR: 0.00080000
+[2026-07-04 05:13:27] Model: Best model saved at epoch 36 with total loss 0.0048
+[2026-07-04 05:13:27] Model: Epoch 35 Train Losses: Average Total Loss: 0.0016 | Average Data Loss: 0.0014 | Average PDE Loss: 0.0023
+[2026-07-04 05:13:27] Model: Epoch 35, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:27] Model: Epoch 36, Training Step, LR: 0.00080000
+[2026-07-04 05:13:28] Model: Best model saved at epoch 37 with total loss 0.0047
+[2026-07-04 05:13:28] Model: Epoch 36 Train Losses: Average Total Loss: 0.0016 | Average Data Loss: 0.0013 | Average PDE Loss: 0.0023
+[2026-07-04 05:13:28] Model: Epoch 36, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:28] Model: Epoch 37, Training Step, LR: 0.00080000
+[2026-07-04 05:13:29] Model: Best model saved at epoch 38 with total loss 0.0045
+[2026-07-04 05:13:29] Model: Epoch 37 Train Losses: Average Total Loss: 0.0015 | Average Data Loss: 0.0013 | Average PDE Loss: 0.0023
+[2026-07-04 05:13:29] Model: Epoch 37, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:29] Model: Epoch 38, Training Step, LR: 0.00080000
+[2026-07-04 05:13:30] Model: Best model saved at epoch 39 with total loss 0.0044
+[2026-07-04 05:13:30] Model: Epoch 38 Train Losses: Average Total Loss: 0.0015 | Average Data Loss: 0.0012 | Average PDE Loss: 0.0022
+[2026-07-04 05:13:30] Model: Epoch 38, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:30] Model: Epoch 39, Training Step, LR: 0.00080000
+[2026-07-04 05:13:30] Model: Epoch 39 Train Losses: Average Total Loss: 0.0015 | Average Data Loss: 0.0012 | Average PDE Loss: 0.0022
+[2026-07-04 05:13:30] Model: Epoch 39, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:31] Model: Epoch 40, Training Step, LR: 0.00080000
+[2026-07-04 05:13:31] Model: Best model saved at epoch 41 with total loss 0.0043
+[2026-07-04 05:13:31] Model: Epoch 40 Train Losses: Average Total Loss: 0.0014 | Average Data Loss: 0.0012 | Average PDE Loss: 0.0021
+[2026-07-04 05:13:31] Model: Epoch 40, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:32] Model: Epoch 41, Training Step, LR: 0.00080000
+[2026-07-04 05:13:32] Model: Best model saved at epoch 42 with total loss 0.0041
+[2026-07-04 05:13:32] Model: Epoch 41 Train Losses: Average Total Loss: 0.0014 | Average Data Loss: 0.0012 | Average PDE Loss: 0.0020
+[2026-07-04 05:13:32] Model: Epoch 41, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:32] Model: Epoch 42, Training Step, LR: 0.00080000
+[2026-07-04 05:13:33] Model: Best model saved at epoch 43 with total loss 0.0040
+[2026-07-04 05:13:33] Model: Epoch 42 Train Losses: Average Total Loss: 0.0013 | Average Data Loss: 0.0012 | Average PDE Loss: 0.0019
+[2026-07-04 05:13:33] Model: Epoch 42, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:33] Model: Epoch 43, Training Step, LR: 0.00080000
+[2026-07-04 05:13:34] Model: Best model saved at epoch 44 with total loss 0.0040
+[2026-07-04 05:13:34] Model: Epoch 43 Train Losses: Average Total Loss: 0.0013 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0019
+[2026-07-04 05:13:34] Model: Epoch 43, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:34] Model: Epoch 44, Training Step, LR: 0.00080000
+[2026-07-04 05:13:35] Model: Best model saved at epoch 45 with total loss 0.0039
+[2026-07-04 05:13:35] Model: Epoch 44 Train Losses: Average Total Loss: 0.0013 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0018
+[2026-07-04 05:13:35] Model: Epoch 44, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:35] Model: Epoch 45, Training Step, LR: 0.00080000
+[2026-07-04 05:13:36] Model: Best model saved at epoch 46 with total loss 0.0038
+[2026-07-04 05:13:36] Model: Epoch 45 Train Losses: Average Total Loss: 0.0013 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0017
+[2026-07-04 05:13:36] Model: Epoch 45, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:36] Model: Epoch 46, Training Step, LR: 0.00080000
+[2026-07-04 05:13:36] Model: Epoch 46 Train Losses: Average Total Loss: 0.0013 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0017
+[2026-07-04 05:13:36] Model: Epoch 46, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:37] Model: Epoch 47, Training Step, LR: 0.00080000
+[2026-07-04 05:13:37] Model: Best model saved at epoch 48 with total loss 0.0038
+[2026-07-04 05:13:37] Model: Epoch 47 Train Losses: Average Total Loss: 0.0013 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0017
+[2026-07-04 05:13:37] Model: Epoch 47, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:37] Model: Epoch 48, Training Step, LR: 0.00080000
+[2026-07-04 05:13:38] Model: Best model saved at epoch 49 with total loss 0.0037
+[2026-07-04 05:13:38] Model: Epoch 48 Train Losses: Average Total Loss: 0.0012 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0016
+[2026-07-04 05:13:38] Model: Epoch 48, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:38] Model: Epoch 49, Training Step, LR: 0.00080000
+[2026-07-04 05:13:39] Model: Best model saved at epoch 50 with total loss 0.0037
+[2026-07-04 05:13:39] Model: Epoch 49 Train Losses: Average Total Loss: 0.0012 | Average Data Loss: 0.0011 | Average PDE Loss: 0.0015
+[2026-07-04 05:13:39] Model: Epoch 49, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 05:13:43] Model: Training function successfully exited

@@ -1,0 +1,94 @@
+# Master run_mode
+run_mode:
+  fem: TRUE # Boolean for whether to run the fem
+  model: TRUE # Boolean for whether to run the model
+
+# Fem config
+fem_config:
+
+  thermodynamics: 
+    gamma: 1.4
+
+  domain:
+    x_diaph: 0.5
+    nx: 250
+    t_final: 0.20
+    dt: 1.0e-3
+
+  initial_conditions:
+    left:
+      rho: 1.0
+      u: 0.0
+      p: 1.0
+    right:
+      rho: 0.125
+      u: 0.0
+      p: 0.1
+
+  scaling:
+    beta: 2.0
+    k_s: 10
+
+  io:
+    snapshot_path: "tests/ops_refactor/test_1/snapshot.npz"
+    plot_path: "tests/ops_refactor/test_1/fem_plot.png"
+
+
+# Network config
+net_config:
+
+  architecture:
+    type: "old_pinn"
+    n_hidden: 48
+    n_blocks: 6
+    n_fourier: 24
+    sigma: 4.0
+
+  loss:
+    type: "cheat_loss"
+    pde_type: "euler"
+    n_col: 2048
+    res_clip: 10.0
+    weight_schedule:
+      - [1.0, 0.1, 1000]
+      - [0.60, 0.60, 2000]
+      - [0.3, 5.0, 3500]
+      - [0.01, 15.0, 5000]
+
+  optimizer:
+    type: "adam_w"
+    lr: 8.0e-4
+    weight_decay: 1.0e-7
+
+  lrsched:
+    type: "reduce_on_plateau"
+    mode: "min"
+    factor: 0.9
+    patience: 150
+    min_lr: 0.0
+    threshold: 1.0e-4
+
+  training:
+    seed: 0
+    device: "cpu"
+    grad_clip: 1.0
+    debug_mode: FALSE
+    n_epochs: 50
+
+  data:
+    snapshot_path: "tests/ops_refactor/test_1/snapshot.npz"
+    num_workers: 0
+    pin_memory: TRUE
+    batch_size: 1024
+    grad_quantile: 0.92
+
+  export:
+    wandb_entity: "Hypersonics"
+    wandb_project: "Refactor"
+    wandb_name: "test_1"
+    local_log_path: "tests/ops_refactor/test_1/model_log.txt"
+    model_save_path: "tests/ops_refactor/test_1/model.pt"
+    plot_comp_path: "tests/ops_refactor/test_1/model_comp_plot.png"
+
+
+

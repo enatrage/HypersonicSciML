@@ -1,0 +1,16 @@
+# Network config
+run_mode:
+  fem: FALSE
+
+net_config:
+
+  training:
+    device: "cuda"
+    n_epochs: 5000
+
+  export:
+    mode: "online"
+    wandb_name: "test_3"
+    local_log_path: "tests/ops_refactor/test_3/model_log.txt"
+    model_save_path: "tests/ops_refactor/test_3/model.pt"
+    plot_comp_path: "tests/ops_refactor/test_3/model_comp_plot.png"

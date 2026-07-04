@@ -16,8 +16,8 @@ def model_runner(cfg_net: NetConfig, cfg_fem: FemConfig):
 
     # Setup wandb and logging
     wandb_run = setup_wandb(
-        model_config=cfg_net, fem_config=cfg_fem, wandb_entity=cfg_net.export.wandb_entity, 
-        wandb_project=cfg_net.export.wandb_project, wandb_name=cfg_net.export.wandb_name
+        model_config=cfg_net, fem_config=cfg_fem, mode=cfg_net.export.mode,
+        wandb_entity=cfg_net.export.wandb_entity, wandb_project=cfg_net.export.wandb_project, wandb_name=cfg_net.export.wandb_name
     )
     setup_logging(local_log_path=cfg_net.export.local_log_path)
     

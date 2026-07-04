@@ -83,6 +83,7 @@ net_config:
     grad_quantile: 0.92
 
   export:
+    mode: "offline"
     wandb_entity: "Hypersonics"
     wandb_project: "Refactor"
     wandb_name: "test_2"

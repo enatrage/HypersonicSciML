@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Literal
 
 class TrainConfig(BaseModel):
     seed: int = Field(..., description="RNG seed")
@@ -15,6 +16,7 @@ class DataConfig(BaseModel):
     grad_quantile: float = Field(description="Smoothness quantile threshold")
 
 class ExportConfig(BaseModel):
+    mode: Literal["online", "offline", "disabled"] = "online"
     wandb_entity: str = Field(description="Entity for WandB log")
     wandb_project: str = Field(description="Project for WandB log")
     wandb_name: str = Field(description="Name for WandB log")

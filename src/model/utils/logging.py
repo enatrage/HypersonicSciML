@@ -4,7 +4,7 @@ import logging
 import sys
 import wandb
 
-def setup_wandb(model_config: NetConfig, fem_config: FemConfig, wandb_entity: str, wandb_project: str, wandb_name: str):
+def setup_wandb(model_config: NetConfig, fem_config: FemConfig, mode: str, wandb_entity: str, wandb_project: str, wandb_name: str):
 
     settings = wandb.Settings(
         show_errors=True,
@@ -21,6 +21,7 @@ def setup_wandb(model_config: NetConfig, fem_config: FemConfig, wandb_entity: st
     }
 
     run = wandb.init(
+        mode= mode,
         entity= wandb_entity,
         project= wandb_project,
         name= wandb_name,

@@ -30,8 +30,8 @@ fem_config:
     k_s: 10
 
   io:
-    snapshot_path: "runs/test_refactor/test_2/snapshot.npz"
-    plot_path: "runs/test_refactor/test_2/fem_plot.png"
+    snapshot_path: "tests/ops_refactor/test_1/snapshot.npz"
+    plot_path: "tests/ops_refactor/test_1/fem_plot.png"
 
 
 # Network config
@@ -76,7 +76,7 @@ net_config:
     n_epochs: 50
 
   data:
-    snapshot_path: "runs/test_refactor/test_2/snapshot.npz"
+    snapshot_path: "tests/ops_refactor/test_1/snapshot.npz"
     num_workers: 0
     pin_memory: TRUE
     batch_size: 1024
@@ -85,10 +85,10 @@ net_config:
   export:
     wandb_entity: "Hypersonics"
     wandb_project: "Refactor"
-    wandb_name: "test_2"
-    local_log_path: "runs/test_refactor/test_2/model_log.txt"
-    model_save_path: "runs/test_refactor/test_2/model.pt"
-    plot_comp_path: "runs/test_refactor/test_2/model_comp_plot.png"
+    wandb_name: "test_1"
+    local_log_path: "tests/ops_refactor/test_1/model_log.txt"
+    model_save_path: "tests/ops_refactor/test_1/model.pt"
+    plot_comp_path: "tests/ops_refactor/test_1/model_comp_plot.png"
 
 
 

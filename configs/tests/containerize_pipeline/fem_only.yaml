@@ -1,0 +1,11 @@
+# Master run_mode
+run_mode:
+  fem: TRUE # Boolean for whether to run the fem
+  model: FALSE # Boolean for whether to run the model
+
+# Fem config
+fem_config:
+
+  io:
+    snapshot_path: "tests/containerize_pipeline/fem/snapshot.npz"
+    plot_path: "tests/containerize_pipeline/fem/fem_plot.png"

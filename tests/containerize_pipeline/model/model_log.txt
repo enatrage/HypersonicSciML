@@ -1,0 +1,27 @@
+[2026-07-04 19:35:55] Model: Logging and WandB setup and initialized
+[2026-07-04 19:35:56] Model: Device set to CUDA
+[2026-07-04 19:35:56] Model: Data figured out
+[2026-07-04 19:35:58] Model: The model, loss, optimizer, scheduler built
+[2026-07-04 19:35:58] Model: Training function called
+[2026-07-04 19:35:59] Training has started, will train for 5 epochs
+[2026-07-04 19:35:59] Model: Epoch 0, Training Step, LR: 0.00080000
+[2026-07-04 19:36:01] Model: Best model saved at epoch 1 with total loss 0.65097851
+[2026-07-04 19:36:01] Model: Epoch 0 Train Losses: Average Total Loss: 0.21699284 | Average Data Loss: 0.08724149 | Average PDE Loss: 1.29751348
+[2026-07-04 19:36:01] Model: Epoch 0, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 19:36:01] Model: Epoch 1, Training Step, LR: 0.00080000
+[2026-07-04 19:36:02] Model: Best model saved at epoch 2 with total loss 0.35279444
+[2026-07-04 19:36:02] Model: Epoch 1 Train Losses: Average Total Loss: 0.11759815 | Average Data Loss: 0.08380064 | Average PDE Loss: 0.33797520
+[2026-07-04 19:36:02] Model: Epoch 1, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 19:36:02] Model: Epoch 2, Training Step, LR: 0.00080000
+[2026-07-04 19:36:03] Model: Best model saved at epoch 3 with total loss 0.27776343
+[2026-07-04 19:36:03] Model: Epoch 2 Train Losses: Average Total Loss: 0.09258781 | Average Data Loss: 0.08045667 | Average PDE Loss: 0.12131123
+[2026-07-04 19:36:03] Model: Epoch 2, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 19:36:03] Model: Epoch 3, Training Step, LR: 0.00080000
+[2026-07-04 19:36:04] Model: Best model saved at epoch 4 with total loss 0.25606719
+[2026-07-04 19:36:04] Model: Epoch 3 Train Losses: Average Total Loss: 0.08535573 | Average Data Loss: 0.07959593 | Average PDE Loss: 0.05759797
+[2026-07-04 19:36:04] Model: Epoch 3, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 19:36:04] Model: Epoch 4, Training Step, LR: 0.00080000
+[2026-07-04 19:36:05] Model: Best model saved at epoch 5 with total loss 0.24360707
+[2026-07-04 19:36:05] Model: Epoch 4 Train Losses: Average Total Loss: 0.08120236 | Average Data Loss: 0.07786035 | Average PDE Loss: 0.03342011
+[2026-07-04 19:36:05] Model: Epoch 4, weights at w_data: 1.0000, w_pde: 0.1000
+[2026-07-04 19:36:10] Model: Training function successfully exited

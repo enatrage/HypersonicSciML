@@ -1,10 +1,10 @@
 """
-A simple forward pass test on the refactored old code, to ensure no tensor shape mismatches occur
+A simple forward pass test on the built architectures of models
 """
 
 def test_function():
 
-    from src.model.pinn import PINN_Euler
+    from src.model.architectures.old_pinn import PINN_Euler
     import torch
 
     model = PINN_Euler()
@@ -16,6 +16,9 @@ def test_function():
 
     assert out.shape == (batch_size, 3), f"Wrong output shape: {out.shape}, was expecting ({batch_size}, 3)"
 
+    return True
+
 if __name__ == "__main__":
     
-    test_function()
+    if test_function():
+        print("Test: Passed")

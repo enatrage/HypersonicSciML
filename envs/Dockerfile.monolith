@@ -1,0 +1,27 @@
+FROM mambaorg/micromamba:latest
+
+# Install OS-level build tools
+USER root
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+USER $MAMBA_USER
+WORKDIR /app
+
+# Provision the Physics Backend
+RUN micromamba install -y -n base -c conda-forge \
+    python=3.10 \
+    fenics \
+    mshr \
+    && micromamba clean --all --yes
+
+# Enforce the Conda base environment path for Pip
+ENV PATH="/opt/conda/bin:$PATH"
+
+# Provision the Machine Learning Stack
+COPY --chown=$MAMBA_USER:$MAMBA_USER requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["/bin/bash"]

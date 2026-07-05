@@ -1,0 +1,21 @@
+# envs/Dockerfile.model
+FROM python:3.10-slim
+
+# Install basic OS utilities (required for git operations and WandB syncing)
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Upgrade pip to handle large binary wheels efficiently
+RUN pip install --no-cache-dir --upgrade pip
+
+COPY requirements.txt /app/
+
+# Install the entire ML/DL stack natively. 
+# Pip will automatically resolve the --extra-index-url cu118 directive inside the file.
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["/bin/bash"]

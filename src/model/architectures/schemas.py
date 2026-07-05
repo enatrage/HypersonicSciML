@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field, computed_field
-from typing import Union, Literal, List, Annotated, Optional
+from pydantic import BaseModel, Field
+from typing import Union, Literal, Annotated
 
 class OldPINNConfig(BaseModel):
     type: Literal["old_pinn"]="old_pinn"

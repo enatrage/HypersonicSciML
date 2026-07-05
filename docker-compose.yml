@@ -1,0 +1,61 @@
+services:
+  fem-engine:
+    build:
+      context: .
+      dockerfile: envs/Dockerfile.fem
+    environment:
+      - PYTHONPATH=/app
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./configs:/app/configs
+      - ./runs:/app/runs
+      - ./tests:/app/tests
+
+  model-engine:
+    build:
+      context: .
+      dockerfile: envs/Dockerfile.model
+    shm_size: '8gb'
+    environment:
+      - PYTHONPATH=/app
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - WANDB_DIR=/tmp
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./configs:/app/configs
+      - ./runs:/app/runs
+      - ./tests:/app/tests
+      - ./wandb:/app/wandb
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  monolith:
+    build:
+      context: .
+      dockerfile: envs/Dockerfile.monolith
+    shm_size: '8gb'
+    environment:
+      - PYTHONPATH=/app
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - WANDB_DIR=/tmp
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./configs:/app/configs
+      - ./runs:/app/runs
+      - ./tests:/app/tests
+      - ./wandb:/app/wandb
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

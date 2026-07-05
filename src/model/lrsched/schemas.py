@@ -1,9 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Union, Literal, Annotated, Optional
-import torch.optim.lr_scheduler as lr_sched
 from pydantic import model_validator
-
-STEP_SCHEDULERS = (lr_sched.OneCycleLR, lr_sched.CosineAnnealingWarmRestarts)
 
 class ReduceLROnPlateauConfig(BaseModel):
     type: Literal["reduce_on_plateau"] = "reduce_on_plateau"

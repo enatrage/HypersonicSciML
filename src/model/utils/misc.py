@@ -1,11 +1,11 @@
-from ..lrsched.schemas import STEP_SCHEDULERS
 import torch.optim.lr_scheduler as lr_sched
 
 import logging
 import torch
 
-def check_lrtype_ifstep(scheduler: lr_sched) -> bool:
-    return isinstance(scheduler, STEP_SCHEDULERS)
+def check_lrtype_ifstep(scheduler: lr_sched.LRScheduler) -> bool:
+    step_based_classes = ("OneCycleLR", "CosineAnnealingWarmRestarts")
+    return scheduler.__class__.__name__ in step_based_classes
 
 def get_n_params(model):
     pp=0

@@ -1,0 +1,29 @@
+# Master run_mode
+run_mode:
+  fem: TRUE # Boolean for whether to run the fem
+  model: TRUE # Boolean for whether to run the model
+
+# Fem config
+fem_config:
+
+  io:
+    snapshot_path: "tests/containerize_pipeline/monolith/snapshot.npz"
+    plot_path: "tests/containerize_pipeline/monolith/fem_plot.png"
+
+# Network config
+net_config:
+
+  training:
+    n_epochs: 5
+
+  data:
+    snapshot_path: "tests/containerize_pipeline/monolith/snapshot.npz"
+
+  export:
+    mode: "online"
+    wandb_entity: "Hypersonics"
+    wandb_project: "Tests"
+    wandb_name: "docker_monolith"
+    local_log_path: "tests/containerize_pipeline/monolith/model_log.txt"
+    model_save_path: "tests/containerize_pipeline/monolith/model.pt"
+    plot_comp_path: "tests/containerize_pipeline/monolith/model_comp_plot.png"

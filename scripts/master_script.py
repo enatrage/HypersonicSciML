@@ -2,8 +2,9 @@ import argparse
 import os
 import sys
 
+import logging
+
 from src.master.config_parser import build_and_validate_config
-from src.master.orchestrator import orchestrate_fem, orchestrate_model
 
 def main():
 
@@ -28,13 +29,21 @@ def main():
 
     run_fem = master_cfg.run_mode.fem; run_model = master_cfg.run_mode.model
 
-    orchestrate_fem(
-        cfg_fem=master_cfg.fem_config, run_fem=run_fem, force_fem=force_fem
-    )
+    if run_fem:
+        from src.master.orchestrator import orchestrate_fem
+        orchestrate_fem(
+            cfg_fem=master_cfg.fem_config, force_fem=force_fem
+        )
+    else:
+        logging.info("ORCHESTRATOR: FEM was not turned on, skipping")
 
-    orchestrate_model(
-        cfg_net=master_cfg.net_config, cfg_fem=master_cfg.fem_config, run_model=run_model, force_model=force_model
-    )
+    if run_model:
+        from src.master.orchestrator import orchestrate_model
+        orchestrate_model(
+            cfg_net=master_cfg.net_config, cfg_fem=master_cfg.fem_config, force_model=force_model
+        )
+    else:
+        logging.info("ORCHESTRATOR: Model training was not turned on, skipping")
 
 if __name__ == "__main__":
     main()

@@ -1,19 +1,30 @@
-FROM quay.io/fenicsproject/stable:current
+# envs/Dockerfile.fem
+FROM mambaorg/micromamba:latest
 
-# Set working directory inside the container
-WORKDIR /workspace
-
-# Install system dependencies for data serialization and networking
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-pip \
-    libhdf5-dev \
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python packages for data export and schema validation
-RUN pip3 install --no-cache-dir \
-    h5py \
-    pyyaml \
-    pydantic==2.6.4
+USER $MAMBA_USER
+WORKDIR /app
 
-USER fenics
+# Provision the Physics Backend (Fenics) via Conda
+RUN micromamba install -y -n base -c conda-forge \
+    python=3.10 \
+    fenics \
+    mshr \
+    numpy \
+    scipy \
+    matplotlib \
+    && micromamba clean --all --yes
+
+ENV PATH="/opt/conda/bin:$PATH"
+COPY --chown=$MAMBA_USER:$MAMBA_USER requirements.txt /app/
+
+# Dynamically strip ML/DL and GPU packages from requirements.txt to prevent bloat
+RUN grep -vE 'torch|nvidia|wandb' requirements.txt > /tmp/fem_requirements.txt && \
+    pip install --no-cache-dir -r /tmp/fem_requirements.txt
+
+CMD ["/bin/bash"]

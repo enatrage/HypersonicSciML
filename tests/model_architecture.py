@@ -7,9 +7,9 @@ def load_model(choice: str):
     if choice == "old_pinn":
         from src.model.architectures.old_pinn import PINN_Euler
         return PINN_Euler()
-    elif choice == "re_pinn":
-        from src.model.architectures.reworked_pinn import ReworkedPINN
-        return ReworkedPINN()
+    elif choice == "LAIrResPINN":
+        from src.model.architectures.la_irrespinn import LA_IrResPINN
+        return LA_IrResPINN()
     elif choice == "dual_path":
         from src.model.architectures.dual_path import DualPath
         return DualPath()
@@ -29,7 +29,7 @@ def test_function(model):
 
 if __name__ == "__main__":
 
-    choice = None
+    choice = "LAIrResPINN"
     model = load_model(choice)
 
     if test_function(model):

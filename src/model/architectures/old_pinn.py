@@ -164,13 +164,3 @@ class PINN_Euler(nn.Module):
         E = self.E_floor + nn.functional.softplus(E_out)
         
         return torch.cat([rho, q, E], dim=-1) # Return the concatted vals
-
-def build_model_from_cfg(cfg, device: torch.device) -> PINN_Euler:
-    """Instantiate a PINN_Euler with the given TrainConfig."""
-    model = PINN_Euler(
-        n_hidden=cfg.n_hidden, 
-        n_blocks=cfg.n_blocks,
-        n_fourier=cfg.n_fourier, 
-        sigma=cfg.sigma,
-    ).to(device)
-    return model

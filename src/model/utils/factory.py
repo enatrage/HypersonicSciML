@@ -12,8 +12,11 @@ def build_architecture(config: ArchitectureConfig) -> nn.Module:
     """Instantiates the PyTorch network based on the configs"""
     kwargs = config.model_dump(exclude={"type"})
     if config.type == "old_pinn":
-        from ..architectures.old_pinn import PINN_Euler
+        from src.model.architectures.old_pinn import PINN_Euler
         return PINN_Euler(**kwargs)
+    elif config.type == "LAIrResPINN":
+        from src.model.architectures.la_irrespinn import LA_IrResPINN
+        return LA_IrResPINN(**kwargs)
 
     raise ValueError(f"Architecture type '{config.type}' is not registered in the architecture load factory")
 

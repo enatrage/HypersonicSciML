@@ -1,0 +1,38 @@
+# Master run_mode
+run_mode:
+  fem: TRUE # Boolean for whether to run the fem
+  model: TRUE # Boolean for whether to run the model
+
+# Fem config
+fem_config:
+
+  io:
+    snapshot_path: "runs/scaling_original/xlarge/snapshot.npz"
+    plot_path: "runs/scaling_original/xlarge/fem_plot.png"
+
+# Network config
+net_config:
+
+  architecture:
+    type: "old_pinn"
+    n_hidden: 256
+    n_blocks: 10
+    n_fourier: 128
+    sigma: 4.0
+
+  data:
+    snapshot_path: "runs/scaling_original/xlarge/snapshot.npz"
+    num_workers: 0
+    pin_memory: TRUE
+    batch_size: 1024
+    grad_quantile: 0.92
+
+  export:
+    wandb_project: "large-scale-runs"
+    wandb_name: "scaling_original/xlarge"
+    local_log_path: "runs/scaling_original/xlarge/model_log.txt"
+    model_save_path: "runs/scaling_original/xlarge/model.pt"
+    plot_comp_path: "runs/scaling_original/xlarge/model_comp_plot.png"
+
+
+

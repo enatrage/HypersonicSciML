@@ -1,0 +1,35 @@
+# Master run_mode
+run_mode:
+  fem: TRUE # Boolean for whether to run the fem
+  model: TRUE # Boolean for whether to run the model
+
+# Fem config
+fem_config:
+
+  io:
+    snapshot_path: "runs/traintune_original/fixedsched_highergradquad/snapshot.npz"
+    plot_path: "runs/traintune_original/fixedsched_highergradquad/fem_plot.png"
+
+
+# Network config
+net_config:
+
+  loss:
+    weight_schedule:
+      - [1.0, 1.0, 5000]
+
+  data:
+    snapshot_path: "runs/traintune_original/fixedsched_highergradquad/snapshot.npz"
+    grad_quantile: 0.98
+
+  export:
+    mode: "online"
+    wandb_entity: "Hypersonics"
+    wandb_project: "large-scale-runs"
+    wandb_name: "traintune_original/fixedsched_highergradquad"
+    local_log_path: "runs/traintune_original/fixedsched_highergradquad/model_log.txt"
+    model_save_path: "runs/traintune_original/fixedsched_highergradquad/model.pt"
+    plot_comp_path: "runs/traintune_original/fixedsched_highergradquad/model_comp_plot.png"
+
+
+
